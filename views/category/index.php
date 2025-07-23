@@ -12,8 +12,7 @@
                 <th class="px-4 py-2 border">ID</th>
                 <th class="px-4 py-2 border">Tên danh mục</th>
                 <th class="px-4 py-2 border">Mô tả</th>
-                <th class="px-4 py-2 border">Danh mục cha</th>
-                <th class="px-4 py-2 border">Hành động</th>
+                <th class="px-4 py-2 border"></th>
             </tr>
         </thead>
         <tbody>
