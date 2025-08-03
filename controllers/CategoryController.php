@@ -1,5 +1,6 @@
 <?php
 require_once './models/CategoryModel.php';
+require_once './views/layout/headerAdminLayout.php';
 
 class CategoryController
 {
@@ -14,44 +15,52 @@ class CategoryController
     public function index()
     {
         $categories = $this->modelCategory->getAllCategories();
-        require_once './views/category/index.php';
+        require_once './views/admin/category/index.php';
     }
 
 
     public function create()
     {
-        require_once './views/category/create.php';
+        $error = null;
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $name = $_POST['name'] ?? null;
+
+            if (trim($name) === '') {
+                $error = "Vui lòng nhập tên danh mục!";
+            } else {
+                $this->modelCategory->insertCategory(name: $name);
+                header('Location: ?act=category');
+                exit;
+            }
+        }
+        require_once './views/admin/category/add.php';
+
     }
-
-
-    public function store()
-    {
-        $this->modelCategory->insertCategory(
-            $_POST['name'],
-            $_POST['description'],
-            $_POST['parent_id'] !== '' ? $_POST['parent_id'] : null
-        );
-        header('Location: http://localhost/shop_fpoly/?act=category');
-    }
-
-
     public function edit()
     {
         $category = $this->modelCategory->getCategoryById($_GET['id']);
-        require_once './views/category/edit.php';
+        $error = null;
+        require_once './views/admin/category/edit.php';
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $name = $_POST['name'] ?? null;
+            if (trim($name) === '') {
+                $error = "Vui lòng nhập tên danh mục!";
+            } else {
+                $this->modelCategory->updateCategory(
+                    $_POST['id'],
+                    $_POST['name'],
+                );
+                header('Location: ?act=category');
+            }
+
+        }
+        exit;
     }
 
 
     public function update()
     {
-        $this->modelCategory->updateCategory(
-            $_POST['id'],
-            $_POST['name'],
-            $_POST['description'],
-            $_POST['parent_id'] !== '' ? $_POST['parent_id'] : null
 
-        );
-        header('Location: ?act=category');
     }
 
     public function delete()

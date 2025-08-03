@@ -18,29 +18,31 @@ class CategoryModel
     // Lấy danh mục theo ID
     public function getCategoryById($id)
     {
-        $sql = "SELECT * FROM categories WHERE category_id = ?";
+        $sql = "SELECT * FROM categories WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
     // Thêm mới danh mục
-    public function insertCategory($name, $description, $parent_id = null): bool
+    public function insertCategory($name)
     {
-        $sql = "INSERT INTO categories (name, description, parent_id) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO categories (name) VALUES (?)";
         $stmt = $this->conn->prepare($sql);
-        return $stmt->execute([$name, $description, $parent_id]);
+
+        return $stmt->execute([$name]);
+
     }
     // Cập nhật danh mục
-    public function updateCategory($id, $name, $description, $parent_id = null): bool
+    public function updateCategory($id, $name)
     {
-        $sql = "UPDATE categories SET name = ?, description = ?, parent_id = ? WHERE category_id = ?";
+        $sql = "UPDATE categories SET name = ? WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
-        return $stmt->execute([$name, $description, $parent_id, $id]);
+        return $stmt->execute([$name, $id]);
     }
     // Xóa danh mục
-    public function deleteCategory($id): bool
+    public function deleteCategory($id)
     {
-        $sql = "DELETE FROM categories WHERE category_id = ?";
+        $sql = "DELETE FROM categories WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute([$id]);
     }
