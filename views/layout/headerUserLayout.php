@@ -252,7 +252,6 @@ $avatar = $user && $user['image']
         }
     });
 
-    // Add smooth scroll effect
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();

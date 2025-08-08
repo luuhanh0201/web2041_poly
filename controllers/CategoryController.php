@@ -1,6 +1,5 @@
 <?php
 require_once './models/CategoryModel.php';
-require_once './views/layout/headerAdminLayout.php';
 
 class CategoryController
 {
@@ -9,6 +8,7 @@ class CategoryController
     public function __construct()
     {
         $this->modelCategory = new CategoryModel();
+        require_once './views/layout/headerAdminLayout.php';
     }
 
 
@@ -40,7 +40,6 @@ class CategoryController
     {
         $category = $this->modelCategory->getCategoryById($_GET['id']);
         $error = null;
-        require_once './views/admin/category/edit.php';
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $name = $_POST['name'] ?? null;
             if (trim($name) === '') {
@@ -54,13 +53,8 @@ class CategoryController
             }
 
         }
+        require_once './views/admin/category/edit.php';
         exit;
-    }
-
-
-    public function update()
-    {
-
     }
 
     public function delete()

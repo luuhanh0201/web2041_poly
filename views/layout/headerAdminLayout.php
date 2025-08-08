@@ -19,11 +19,11 @@ $avatar = $user && $user['image']
                         class="text-blue-600 hover:text-blue-800 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                         Home
                     </a>
-                    <a href="?act=category"
+                    <a href="/?act=category"
                         class="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                         Category
                     </a>
-                    <a href="?act=products"
+                    <a href="/?act=products"
                         class="text-gray-600 hover:text-gray-800 px-3 py-2 rounded-md text-sm font-medium transition-colors">
                         Products
                     </a>

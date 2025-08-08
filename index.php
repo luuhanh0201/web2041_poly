@@ -29,18 +29,27 @@ $act = $_GET['act'] ?? '/';
 
 
 match ($act) {
-  '/' => (new ProductController())->Home(),
+  '/' => (new ProductController())->index(),
 
+  // Auths
   'signin' => (new AuthController())->signIn(),
   'signup' => (new AuthController())->signUp(),
   'logout' => (new AuthController())->logout(),
+
+  // Cate
   'category' => (new CategoryController())->index(),
   'addCategory' => (new CategoryController())->create(),
   'editCategory' => (new CategoryController())->edit(),
   'deleteCategory' => (new CategoryController())->delete(),
 
+  // Products
+  'products' => (new ProductController())->index(),
+  'addProduct' => (new ProductController())->create(),
+  'editProduct' => (new ProductController())->edit(),
+  'deleteProduct' => (new ProductController())->delete(),
 
-  default => "404 - Page Not Found",
+
+  default => include 'views/errors/404.php',
 };
 
 ?>

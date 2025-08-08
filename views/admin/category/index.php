@@ -1,11 +1,9 @@
 <main class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-    <!-- Page Title -->
     <div class="mb-6">
         <h2 class="text-2xl font-bold text-gray-900">Quản Lý Category</h2>
         <p class="text-gray-600 mt-1">Danh sách các danh mục sản phẩm</p>
     </div>
 
-    <!-- Add Category Button -->
     <div class="mb-4">
         <a href="/?act=addCategory"
             class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
@@ -13,7 +11,6 @@
         </a>
     </div>
 
-    <!-- Category Table -->
     <div class="bg-white shadow-sm rounded-lg border border-gray-200 overflow-hidden">
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
