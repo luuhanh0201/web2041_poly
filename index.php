@@ -6,49 +6,64 @@
 <?php
 session_start();
 
-// Require toàn bộ các file khai báo môi trường, thực thi,...(không require view)
 
-// Require file Common
 require_once './commons/env.php'; // Khai báo biến môi trường
 require_once './commons/function.php'; // Hàm hỗ trợ
 
-// Require toàn bộ file Controllers
 require_once './controllers/ProductController.php';
 require_once './controllers/CategoryController.php';
 require_once './controllers/AuthController.php';
-
 
 // Require toàn bộ file Models
 require_once './models/ProductModel.php';
 require_once './models/CategoryModel.php';
 require_once './models/AuthModel.php';
 
+function isLoggedIn()
+{
+  return isset($_SESSION['user']);
+}
+
+function isAdmin()
+{
+  return isLoggedIn() && isset($_SESSION['user']['role']) && $_SESSION['user']['role'] === 'admin';
+}
+
+function toSignin()
+{
+  header('Location: index.php?act=signin');
+  exit();
+}
 
 // Route
 $act = $_GET['act'] ?? '/';
 
-
 match ($act) {
-  '/' => (new ProductController())->index(),
+  // Public route
+  '/' => (new ProductController())->Home(),
+  'products' => (new ProductController())->index(),
 
-  // Auths
   'signin' => (new AuthController())->signIn(),
   'signup' => (new AuthController())->signUp(),
   'logout' => (new AuthController())->logout(),
 
-  // Cate
-  'category' => (new CategoryController())->index(),
-  'addCategory' => (new CategoryController())->create(),
-  'editCategory' => (new CategoryController())->edit(),
-  'deleteCategory' => (new CategoryController())->delete(),
-
-  // Products
-  'products' => (new ProductController())->index(),
-  'addProduct' => (new ProductController())->create(),
-  'editProduct' => (new ProductController())->edit(),
-  'deleteProduct' => (new ProductController())->delete(),
 
 
+  // Private route
+  'admin/dashboard' => isAdmin() ? include 'views/admin/index.php' : toSignin(),
+  'admin/users' => isAdmin() ? (new AuthController())->showUsers() : toSignin(),
+
+  'admin/category' => isAdmin() ? (new CategoryController())->index() : toSignin(),
+  'admin/addCategory' => isAdmin() ? (new CategoryController())->create() : toSignin(),
+  'admin/editCategory' => isAdmin() ? (new CategoryController())->edit() : toSignin(),
+  'admin/deleteCategory' => isAdmin() ? (new CategoryController())->delete() : toSignin(),
+
+  'admin/products' => isAdmin() ? (new ProductController())->index() : toSignin(),
+  'admin/addProduct' => isAdmin() ? (new ProductController())->create() : toSignin(),
+  'admin/editProduct' => isAdmin() ? (new ProductController())->edit() : toSignin(),
+  'admin/deleteProduct' => isAdmin() ? (new ProductController())->delete() : toSignin(),
+
+  // 404
   default => include 'views/errors/404.php',
 };
 
